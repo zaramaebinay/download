@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subscribe to Download</title>
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+            background-color: #2f2f2f; /* Dark gray background */
+            color: white;
+        }
+        .container {
+            padding: 20px;
+        }
+        h1 {
+            color: #ff0000;
+            font-weight: bold;
+        }
+        p {
+            font-size: 18px;
+        }
+        button {
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            padding: 15px;
+            font-size: 18px;
+            cursor: pointer;
+            margin: 20px 0;
+        }
+        .download-section {
+            display: none;
+            margin-top: 30px;
+        }
+        .warning {
+            color: yellow;
+            font-size: 16px;
+        }
+        #loading-text {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .warning-title {
+            color: red;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .warning {
+            color: red;
+            font-size: 16px;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>To Download:</h1>
+        <p><strong>1st: Subscribe</strong></p>
+        <a href="https://www.youtube.com/channel/UCX1Nb8MR3n27KP-OTF_1hQw" target="_blank">
+            <button>Subscribe to My YouTube Channel</button>
+        </a>
+        <p><strong>__________________________________________________________________</strong></p>
+        <p><strong>2nd:Like the video and leave a comment</strong></p>
+  
+        <a href="javascript:void(0);" id="download-btn">
+            <button>DOWNLOAD</button>
+        </a>
+
+        <div class="download-section" id="download-section">
+           
+        </div>
+    </div>
+
+    <script>
+        const downloadBtn = document.getElementById("download-btn");
+        const downloadSection = document.getElementById("download-section");
+        const loadingTextElement = document.createElement("p");
+	loadingTextElement.style.color = "yellow";
+        let countdown = 300;
+        let loadingInterval;
+
+        // Initialize the download section and button behavior
+        function initializeDownload() {
+            downloadBtn.addEventListener("click", startDownload);
+        }
+
+        // Start download process
+        function startDownload() {
+            // Change background color to orange
+            document.body.style.backgroundColor = "orange";
+
+            // Remove the "Download" button
+            downloadBtn.remove();
+
+            // Show the download section and button
+            downloadSection.style.display = 'block';
+
+            // Add the loading text to the page
+            loadingTextElement.id = "loading-text";
+            loadingTextElement.textContent = "Downloading in " + countdown + " seconds...";
+	    loadingTextElement.style.color = "green";
+            document.body.appendChild(loadingTextElement);
+
+            // Start countdown and update loading text
+            loadingInterval = setInterval(updateLoadingText, 1000);
+
+            // WARNING
+            setTimeout(showWarning, 10000);
+
+            // DOWNLOADING 60 seconds
+            setTimeout(checkDownloadAvailability, 250000);
+        }
+
+        // Update the loading text every second
+        function updateLoadingText() {
+            countdown--;
+            loadingTextElement.textContent = "Downloading in " + countdown + " seconds...";
+
+            if (countdown <= 0) {
+                clearInterval(loadingInterval);
+                loadingTextElement.textContent = "Download Complete!";
+                setTimeout(initiateDownload, 1000);
+            }
+        }
+
+        // Show warning section after 10 seconds
+        function showWarning() {
+            const warningSection = document.createElement('div');
+            warningSection.innerHTML = ` 
+                <p class="warning-title">If download doesn't work:</p>
+                <p class="warning">Make sure you have hit the subscribe, or this will not work!</p>
+                <p class="warning">Hurry!! Always check out my new video update before this file gets deleted by Google or Roblox!</p>
+            `;
+            document.body.appendChild(warningSection);
+        }
+
+        // Simulate file download
+        function initiateDownload() {
+            window.location.href = 'path/to/your/script.zip'; // Replace with actual download link
+        }
+
+// Change the page to notify about file deletion after 200 seconds
+function checkDownloadAvailability() {
+    document.body.style.backgroundColor = "white";
+    document.body.innerHTML = `
+        <h6 style="color: black;">
+            YOU HAVE AN ERROR:
+            <ul>
+                <li>Action needed: Subscribe</li>
+                <li>Action needed: Like the video</li>
+                <li>Action needed: Leave a comment</li>
+                <li>Or the file was deleted by Roblox</li>
+            </ul>
+        </h6>`;
+}
+
+        // Initialize the process when the page loads
+        initializeDownload();
+    </script>
+
+</body>
+</html>
